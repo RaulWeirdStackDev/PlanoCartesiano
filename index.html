@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Cartesiano Interactivo</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <h1>Plano Cartesiano Interactivo</h1>
+    <div id="coordinate-form">
+        <div class="input-row">
+            <input type="number" id="x-coord" placeholder="Coordenada X" step="any">
+            <input type="number" id="y-coord" placeholder="Coordenada Y" step="any">
+        </div>
+        <div class="button-row">
+            <button onclick="addPoint()">Agregar Punto</button>
+            <button id="clear-btn" onclick="clearPoints()">Limpiar</button>
+            <button onclick="generateRandomFunction()" style="background-color: #28a745;">Generar Función</button>
+            <button id="clear-function-btn" onclick="clearFunction()">Borrar Función</button>
+        </div>
+    </div>
+    <div id="function-display"></div>
+    <div id="canvas-container">
+        <canvas id="cartesian-plane" width="660" height="660"></canvas>
+    </div>
+    <footer>Creado por Raúl Rodríguez - 2025</footer>
+    <script src="assets/js/graficos.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        #canvas-container {
+            width: 100%;
+            max-width: 660px;
+            height: auto;
+            margin-top: 20px;
+            position: relative;
+            border: 2px solid #ccc;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        #coordinate-form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 10px;
+        }
+
+        input[type="number"] {
+            padding: 12px 8px;
+            margin: 0;
+            width: 100px;
+            min-width: 80px;
+            flex: 1;
+            max-width: 120px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #clear-btn {
+            background-color: #dc3545;
+        }
+
+        #clear-btn:hover {
+            background-color: #b02a37;
+        }
+
+        #clear-function-btn {
+            background-color: #6c757d;
+        }
+
+        #clear-function-btn:hover {
+            background-color: #565e64;
+        }
+
+        #function-display {
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            min-height: 25px;
+            color: #333;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 10px;
+        }
+
+        #cartesian-plane {
+            border: 1px solid #ddd;
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #3a3a3a;
+            border-top: solid 1px #ccc;
+            padding: 10px 0 0 0;
+        }
+
+
+        @media (max-width: 768px) {
+            body {
+                margin: 5px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+                margin: 5px 0 15px 0;
+            }
+
+            #coordinate-form {
+                margin-bottom: 15px;
+                gap: 8px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .input-row {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .button-row {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+                max-width: 320px;
+            }
+
+            input[type="number"] {
+                padding: 14px 10px;
+                font-size: 16px;
+                flex: 1;
+                min-width: 0;
+            }
+
+            button {
+                padding: 14px 12px;
+                font-size: 13px;
+                flex: 1;
+                min-width: 0;
+            }
+
+            #function-display {
+                font-size: 15px;
+                margin-bottom: 15px;
+            }
+
+            #canvas-container {
+                margin-top: 15px;
+                width: 100vw;
+                max-width: calc(100vw - 20px);
+                margin-left: calc(-50vw + 50%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            #function-display {
+                font-size: 14px;
+            }
+
+            input[type="number"] {
+                padding: 16px 8px;
+            }
+
+            button {
+                padding: 16px 10px;
+                font-size: 12px;
+            }
+        }
