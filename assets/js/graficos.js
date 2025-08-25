@@ -1,4 +1,4 @@
-      const canvas = document.getElementById('cartesian-plane');
+        const canvas = document.getElementById('cartesian-plane');
         const ctx = canvas.getContext('2d');
         const points = [];
         
@@ -68,7 +68,32 @@
             ctx.fillText('0', centerX - 15, centerY + 15);
         }
 
+        function drawLines() {
+            if (points.length < 2 || !document.getElementById('show-lines').checked) return;
+            
+            ctx.strokeStyle = 'rgba(54, 162, 235, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([]);
+            
+            ctx.beginPath();
+            const firstPoint = points[0];
+            const firstPixelX = centerX + (firstPoint.x * gridSize);
+            const firstPixelY = centerY - (firstPoint.y * gridSize);
+            ctx.moveTo(firstPixelX, firstPixelY);
+            
+            for (let i = 1; i < points.length; i++) {
+                const point = points[i];
+                const pixelX = centerX + (point.x * gridSize);
+                const pixelY = centerY - (point.y * gridSize);
+                ctx.lineTo(pixelX, pixelY);
+            }
+            
+            ctx.stroke();
+        }
+
         function drawPoints() {
+            if (!document.getElementById('show-points').checked) return;
+            
             ctx.fillStyle = 'rgba(255, 99, 132, 0.8)';
             points.forEach(point => {
                 const pixelX = centerX + (point.x * gridSize);
@@ -83,6 +108,7 @@
 
         function redrawCanvas() {
             drawCartesianPlane();
+            drawLines();
             drawPoints();
         }
 
@@ -139,5 +165,22 @@
             currentFunction = null;
             document.getElementById('function-display').textContent = '';
         }
+
+        // Event listeners para los checkboxes
+        document.getElementById('show-lines').addEventListener('change', redrawCanvas);
+        document.getElementById('show-points').addEventListener('change', redrawCanvas);
+
+        // Event listeners para presionar Enter en los campos de entrada
+        document.getElementById('x-coord').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('y-coord').focus();
+            }
+        });
+
+        document.getElementById('y-coord').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addPoint();
+            }
+        });
 
         drawCartesianPlane();
