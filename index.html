@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plano Cartesiano con Líneas</title>
-<link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <h1>Plano Cartesiano Interactivo</h1>
 
-        <div class="toggle-section">
+    <div class="toggle-section">
         <div class="checkbox-container">
             <input type="checkbox" id="show-lines" checked>
             <label for="show-lines">Mostrar líneas entre puntos</label>
@@ -36,7 +36,11 @@
     
     <div id="function-display" class="function-display"></div>
     <button id="evaluate-function">Evaluar función con Gemini</button>
-<div id="gemini-result" class="gemini-result"></div>
+    
+    <div id="gemini-container">
+        <div id="gemini-loader" class="hidden">Cargando...</div>
+        <div id="gemini-result" class="gemini-result"></div>
+    </div>
     
     <canvas id="cartesian-plane" width="660" height="660"></canvas>
     

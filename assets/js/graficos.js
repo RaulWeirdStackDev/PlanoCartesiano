@@ -50,14 +50,14 @@ function drawCartesianPlane() {
 
     for (let i = -10; i <= 10; i++) {
         if (i !== 0) {
-            const x = centerX + (i * gridSize);
+            const x = centerX + i * gridSize;
             if (x >= 0 && x <= canvasWidth) ctx.fillText(i.toString(), x, centerY + 15);
         }
     }
 
     for (let i = -10; i <= 10; i++) {
         if (i !== 0) {
-            const y = centerY - (i * gridSize);
+            const y = centerY - i * gridSize;
             ctx.fillText(i.toString(), centerX - 15, y);
         }
     }
@@ -154,27 +154,20 @@ function clearFunction() {
 
 // Limpiar texto de Gemini
 function limpiarTexto(texto) {
-    let limpio = texto.replace(/\*|\\textbf{}/g, '')  // quitar asteriscos y LaTeX
-                      .replace(/\\mathbf{}/g, '')
-                      .replace(/#+\s?/g, '')          // títulos Markdown
-                      .replace(/\$/g, '')             // $ de fórmulas
-                      .replace(/---/g, '')            // separadores
-                      .trim();
-    return limpio;
+    return texto.replace(/\*|\\textbf{}/g, '')
+                .replace(/\\mathbf{}/g, '')
+                .replace(/#+\s?/g, '')
+                .replace(/\$/g, '')
+                .replace(/---/g, '')
+                .trim();
 }
 
 // Formatear texto de Gemini en HTML
 function formatearGemini(texto) {
     let limpio = limpiarTexto(texto);
-
-    // Resaltar y(0) y y(1)
     limpio = limpio.replace(/y\(\d+\)\s?=\s?-?\d+/g, match => `<span class="highlight">${match}</span>`);
-
-    // Separar por líneas y envolver en <p>
     const lineas = limpio.split(/\n+/).map(line => line.trim()).filter(line => line);
-    const html = lineas.map(line => `<p>${line}</p>`).join('');
-
-    return html;
+    return lineas.map(line => `<p>${line}</p>`).join('');
 }
 
 // Event listeners
@@ -190,11 +183,18 @@ document.getElementById('y-coord').addEventListener('keypress', e => {
 
 drawCartesianPlane();
 
+// Evaluate function con loader
 document.getElementById("evaluate-function").addEventListener("click", async () => {
     if (!currentFunction) {
         alert("Primero genera una función aleatoria.");
         return;
     }
+
+    const loader = document.getElementById('gemini-loader');
+    const resultDiv = document.getElementById('gemini-result');
+
+    loader.classList.remove('hidden');
+    resultDiv.innerHTML = '';
 
     const { m, b } = currentFunction;
     const y0 = m * 0 + b;
@@ -204,7 +204,6 @@ document.getElementById("evaluate-function").addEventListener("click", async () 
     if (m === 1) functionText += "x";
     else if (m === -1) functionText += "-x";
     else functionText += m + "x";
-
     if (b > 0) functionText += " + " + b;
     else if (b < 0) functionText += " - " + Math.abs(b);
 
@@ -223,9 +222,11 @@ document.getElementById("evaluate-function").addEventListener("click", async () 
         });
 
         const data = await res.json();
-        document.getElementById("gemini-result").innerHTML = formatearGemini(data.reply);
+        resultDiv.innerHTML = formatearGemini(data.reply);
     } catch (err) {
         console.error(err);
-        document.getElementById("gemini-result").textContent = "Error al contactar Gemini.";
+        resultDiv.textContent = "Error al contactar Gemini.";
+    } finally {
+        loader.classList.add('hidden');
     }
 });

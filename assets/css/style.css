@@ -362,3 +362,21 @@ label {
         width: 100%;
     }
 }
+
+#gemini-loader {
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    margin: 10px 0;
+    font-size: 16px;
+    animation: blink 1s infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.3; }
+}
