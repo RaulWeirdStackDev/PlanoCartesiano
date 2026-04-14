@@ -4,32 +4,36 @@ const points = [];
 
 const canvasWidth = 660;
 const canvasHeight = 660;
-const gridSize = 30; 
+const canvasMargin = 20;
+const gridSize = (canvasWidth - 2 * canvasMargin) / 40; 
 const centerX = canvasWidth / 2;
-const centerY = canvasHeight / 2;
+const centerY = canvasHeight / 2;// 660 / 40 = 16.5 (para -20 a +20)
+
 
 let currentFunction = null;
 
 function drawCartesianPlane() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+    // Dibujar líneas de la grilla
     ctx.strokeStyle = '#e0e0e0';
     ctx.lineWidth = 1;
 
-    for (let x = 0; x <= canvasWidth; x += gridSize) {
+    for (let x = canvasMargin; x <= canvasWidth - canvasMargin; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, canvasHeight);
         ctx.stroke();
     }
 
-    for (let y = 0; y <= canvasHeight; y += gridSize) {
+    for (let y = canvasMargin; y <= canvasWidth - canvasMargin; y += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(canvasWidth, y);
         ctx.stroke();
     }
 
+    // Dibujar ejes
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 2;
 
@@ -43,22 +47,24 @@ function drawCartesianPlane() {
     ctx.lineTo(centerX, canvasHeight);
     ctx.stroke();
 
+    // Dibujar etiquetas
     ctx.fillStyle = '#000';
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    for (let i = -10; i <= 10; i++) {
+    for (let i = -20; i <= 20; i++) {
         if (i !== 0) {
             const x = centerX + i * gridSize;
-            if (x >= 0 && x <= canvasWidth) ctx.fillText(i.toString(), x, centerY + 15);
+if (x >= 0 && x <= canvasWidth) ctx.fillText(i.toString(), x, centerY + 15);
+
         }
     }
 
-    for (let i = -10; i <= 10; i++) {
+    for (let i = -20; i <= 20; i++) {
         if (i !== 0) {
             const y = centerY - i * gridSize;
-            ctx.fillText(i.toString(), centerX - 15, y);
+if (y >= 0 && y <= canvasHeight) ctx.fillText(i.toString(), centerX - 15, y);
         }
     }
 
@@ -66,7 +72,7 @@ function drawCartesianPlane() {
 }
 
 function drawLines() {
-    if (points.length < 2 || !document.getElementById('show-lines').checked) return;
+    if (points.length < 2 || !document.getElementById('show-lines')?.checked) return;
 
     ctx.strokeStyle = 'rgba(54, 162, 235, 0.8)';
     ctx.lineWidth = 2;
@@ -85,7 +91,7 @@ function drawLines() {
 }
 
 function drawPoints() {
-    if (!document.getElementById('show-points').checked) return;
+    if (!document.getElementById('show-points')?.checked) return;
 
     ctx.fillStyle = 'rgba(255, 99, 132, 0.8)';
     points.forEach(point => {
@@ -171,20 +177,20 @@ function formatearGemini(texto) {
 }
 
 // Event listeners
-document.getElementById('show-lines').addEventListener('change', redrawCanvas);
-document.getElementById('show-points').addEventListener('change', redrawCanvas);
+document.getElementById('show-lines')?.addEventListener('change', redrawCanvas);
+document.getElementById('show-points')?.addEventListener('change', redrawCanvas);
 
-document.getElementById('x-coord').addEventListener('keypress', e => {
+document.getElementById('x-coord')?.addEventListener('keypress', e => {
     if (e.key === 'Enter') document.getElementById('y-coord').focus();
 });
-document.getElementById('y-coord').addEventListener('keypress', e => {
+document.getElementById('y-coord')?.addEventListener('keypress', e => {
     if (e.key === 'Enter') addPoint();
 });
 
 drawCartesianPlane();
 
 // Evaluate function con loader
-document.getElementById("evaluate-function").addEventListener("click", async () => {
+document.getElementById("evaluate-function")?.addEventListener("click", async () => {
     if (!currentFunction) {
         alert("Primero genera una función aleatoria.");
         return;
