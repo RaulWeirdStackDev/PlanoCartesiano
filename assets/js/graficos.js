@@ -2,12 +2,12 @@ const canvas = document.getElementById('cartesian-plane');
 const ctx = canvas.getContext('2d');
 const points = [];
 
-const canvasWidth = 660;
-const canvasHeight = 660;
-const canvasMargin = 20;
+const canvasWidth = 900;
+const canvasHeight = 900;
+const canvasMargin = 30;
 const gridSize = (canvasWidth - 2 * canvasMargin) / 40; 
 const centerX = canvasWidth / 2;
-const centerY = canvasHeight / 2;// 660 / 40 = 16.5 (para -20 a +20)
+const centerY = canvasHeight / 2; // 900 / 40 = 21px por celda
 
 
 let currentFunction = null;
@@ -49,26 +49,30 @@ function drawCartesianPlane() {
 
     // Dibujar etiquetas
     ctx.fillStyle = '#000';
-    ctx.font = '12px Arial';
+    ctx.font = '11px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
+    // Eje X: números debajo del eje, centrados en cada celda
     for (let i = -20; i <= 20; i++) {
         if (i !== 0) {
             const x = centerX + i * gridSize;
-if (x >= 0 && x <= canvasWidth) ctx.fillText(i.toString(), x, centerY + 15);
-
+            if (x >= 0 && x <= canvasWidth) ctx.fillText(i.toString(), x, centerY + 14);
         }
     }
 
+    // Eje Y: números a la izquierda del eje, centrados verticalmente en cada celda
+    ctx.textAlign = 'right';
     for (let i = -20; i <= 20; i++) {
         if (i !== 0) {
             const y = centerY - i * gridSize;
-if (y >= 0 && y <= canvasHeight) ctx.fillText(i.toString(), centerX - 15, y);
+            if (y >= 0 && y <= canvasHeight) ctx.fillText(i.toString(), centerX - 5, y);
         }
     }
 
-    ctx.fillText('0', centerX - 15, centerY + 15);
+    // El "0" va en la esquina de los ejes, alejado de los -1
+    ctx.textAlign = 'right';
+    ctx.fillText('0', centerX - 5, centerY - 5);
 }
 
 function drawLines() {
